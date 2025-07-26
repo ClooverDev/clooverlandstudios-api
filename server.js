@@ -2,10 +2,18 @@ const express = require('express');
 const app = express();
 const port = process.env.PORT || 1306;
 
+const cors = require('cors');
+app.use(cors()); // This enables CORS for all routes
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    next();
+});
+
 const { Pool } = require('pg');
 
 const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
+  connectionString: process.env.DATABASE_URL || "postgresql://postgres.qmnursauhkzeqcxelcur:flcloverapi-26072025-clooverlandstudios@aws-0-us-east-2.pooler.supabase.com:5432/postgres",
   ssl: { rejectUnauthorized: false }
 });
 
