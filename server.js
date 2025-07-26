@@ -77,6 +77,22 @@ app.get('/get/:id', async (req, res) => {
     }
 });
 
+// DELETE request to delete data
+app.delete('/delete/:id', async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const result = await pool.query('DELETE FROM posts WHERE id = $1', [id]);
+        if (result.rowCount === 0) {
+            return res.status(404).json({ error: `No data found to delete for ID ${id}.` });
+        }
+
+        res.status(200).json({ message: `Data deleted for ID ${id}.` });
+    } catch (err) {
+        res.status(500).json({ error: 'Error deleting data from the database.', details: err.message });
+    }
+});
+
 // Start the server
 app.listen(port, () => {
     console.log(`Server started on port ${port}`);
