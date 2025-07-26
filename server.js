@@ -1,12 +1,12 @@
 const express = require('express');
-const { Pool } = require('pg'); // Import PostgreSQL client
 const app = express();
 const port = process.env.PORT || 1306;
 
-// Use the connection string from Supabase
+const { Pool } = require('pg');
+
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:flcloverapi-26072025-clooverlandstudios@db.qmnursauhkzeqcxelcur.supabase.co:5432/postgres', // Use your Supabase connection string here
-    ssl: { rejectUnauthorized: false } // Required for Supabase
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
 });
 
 app.use(express.json());
