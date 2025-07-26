@@ -1,17 +1,17 @@
 const express = require('express');
 const sqlite3 = require('sqlite3').verbose();
 const app = express();
-const PORT = 1306;
+const port = process.env.PORT || 1306;
 
 app.use(express.json());
 
 app.listen(PORT, () => {
-    console.log(`servido acoido http://localhost:${PORT}`);
+    console.log(`Server started on port 1306`);
 });
 
 const db = new sqlite3.Database('./database.db', (err) => {
-    if (err) return console.error('Erro ao abrir o banco:', err.message);
-    console.log('conectou ao banco de dadsoado loefleqlfqewf');
+    if (err) return console.error('Error while trying to open or create database:', err.message);
+    console.log('Connected with the Database');
 });
 
 db.run(`
@@ -20,6 +20,10 @@ db.run(`
         data TEXT
     )
 `);
+
+app.get("/", (req,res)=>{
+    res.send("This is a API service that I made to use in my websites or in my games.")
+})
 
 app.post('/save/:id', (req, res) => {
     const { id } = req.params;
