@@ -5,7 +5,7 @@ const port = process.env.PORT || 1306;
 
 // Use the connection string from Supabase
 const pool = new Pool({
-    connectionString: process.env.DATABASE_URL || 'postgres://your_user:your_password@your_host:5432/your_database', // Use your Supabase connection string here
+    connectionString: process.env.DATABASE_URL || 'postgresql://postgres:flcloverapi-26072025-clooverlandstudios@db.qmnursauhkzeqcxelcur.supabase.co:5432/postgres', // Use your Supabase connection string here
     ssl: { rejectUnauthorized: false } // Required for Supabase
 });
 
