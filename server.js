@@ -1,14 +1,30 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 1306;
 
-const cors = require('cors');
-app.use(cors()); // This enables CORS for all routes
+const favicon = require('serve-favicon');
+const path = require('path');
+
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
+app.use(cors());
+
+app.use(cors({
+    origin: 'https://api-v2.clooverlandstudios.com/'
+}));
+
+app.use(express.json());
 
 app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
+    res.setHeader(
+        "Content-Security-Policy",
+        "default-src 'self'; connect-src 'self'"
+    );
     next();
 });
+
 
 const { Pool } = require('pg');
 
@@ -17,7 +33,6 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
-app.use(express.json());
 
 // Check the connection
 pool.connect((err) => {
